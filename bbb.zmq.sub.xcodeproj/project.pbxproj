@@ -1,0 +1,321 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 44;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		22CF119B0EE9A8250054F513 /* bbb.zmq.sub.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 22CF119A0EE9A8250054F513 /* bbb.zmq.sub.cpp */; };
+		22CF119E0EE9A82E0054F513 /* MaxAudioAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22CF119D0EE9A82E0054F513 /* MaxAudioAPI.framework */; };
+		9597CDDE1FE14DB600BF5207 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 9597CDDB1FE14DB600BF5207 /* LICENSE */; };
+		9597CDDF1FE14DB600BF5207 /* zmq.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9597CDDC1FE14DB600BF5207 /* zmq.hpp */; };
+		9597CDE01FE14DB600BF5207 /* zmq_addon.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9597CDDD1FE14DB600BF5207 /* zmq_addon.hpp */; };
+		9597CDE81FE1507C00BF5207 /* libzmq.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9597CDE41FE1507700BF5207 /* libzmq.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		22CF10220EE984600054F513 /* maxmspsdk.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = maxmspsdk.xcconfig; path = ../../libs/maxcpp/maxmspsdk.xcconfig; sourceTree = SOURCE_ROOT; };
+		22CF119A0EE9A8250054F513 /* bbb.zmq.sub.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bbb.zmq.sub.cpp; sourceTree = "<group>"; };
+		22CF119D0EE9A82E0054F513 /* MaxAudioAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MaxAudioAPI.framework; path = "../../libs/max-sdk/source/c74support/msp-includes/MaxAudioAPI.framework"; sourceTree = SOURCE_ROOT; };
+		2FBBEAE508F335360078DB84 /* bbb.zmq.sub.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = bbb.zmq.sub.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		36C5493616F558AA0054C037 /* maxcpp6.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = maxcpp6.h; sourceTree = "<group>"; };
+		9597CDDB1FE14DB600BF5207 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		9597CDDC1FE14DB600BF5207 /* zmq.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = zmq.hpp; sourceTree = "<group>"; };
+		9597CDDD1FE14DB600BF5207 /* zmq_addon.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = zmq_addon.hpp; sourceTree = "<group>"; };
+		9597CDE31FE1507700BF5207 /* libzmq.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libzmq.5.dylib; sourceTree = "<group>"; };
+		9597CDE41FE1507700BF5207 /* libzmq.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libzmq.a; sourceTree = "<group>"; };
+		9597CDE51FE1507700BF5207 /* libzmq.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libzmq.dylib; sourceTree = "<group>"; };
+		9597CDE71FE1507700BF5207 /* libzmq.pc */ = {isa = PBXFileReference; lastKnownFileType = text; path = libzmq.pc; sourceTree = "<group>"; };
+		9597CDE91FE5205B00BF5207 /* bbb.zmq.sub.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = bbb.zmq.sub.hpp; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2FBBEADC08F335360078DB84 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				22CF119E0EE9A82E0054F513 /* MaxAudioAPI.framework in Frameworks */,
+				9597CDE81FE1507C00BF5207 /* libzmq.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		089C166AFE841209C02AAC07 /* iterator */ = {
+			isa = PBXGroup;
+			children = (
+				36C5491F16F557E00054C037 /* maxcpp */,
+				22CF10220EE984600054F513 /* maxmspsdk.xcconfig */,
+				9597CDE91FE5205B00BF5207 /* bbb.zmq.sub.hpp */,
+				22CF119A0EE9A8250054F513 /* bbb.zmq.sub.cpp */,
+				9597CB051FE14C8500BF5207 /* libs */,
+				22CF119D0EE9A82E0054F513 /* MaxAudioAPI.framework */,
+				19C28FB4FE9D528D11CA2CBB /* Products */,
+				9597CDE11FE1507600BF5207 /* Frameworks */,
+			);
+			name = iterator;
+			sourceTree = "<group>";
+		};
+		19C28FB4FE9D528D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2FBBEAE508F335360078DB84 /* bbb.zmq.sub.bundle */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		36C5491F16F557E00054C037 /* maxcpp */ = {
+			isa = PBXGroup;
+			children = (
+				36C5493616F558AA0054C037 /* maxcpp6.h */,
+			);
+			name = maxcpp;
+			path = ../../libs/maxcpp/maxcpp;
+			sourceTree = SOURCE_ROOT;
+		};
+		9597CB051FE14C8500BF5207 /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				9597CDDA1FE14DB600BF5207 /* cppzmq */,
+			);
+			path = libs;
+			sourceTree = "<group>";
+		};
+		9597CDDA1FE14DB600BF5207 /* cppzmq */ = {
+			isa = PBXGroup;
+			children = (
+				9597CDDB1FE14DB600BF5207 /* LICENSE */,
+				9597CDDC1FE14DB600BF5207 /* zmq.hpp */,
+				9597CDDD1FE14DB600BF5207 /* zmq_addon.hpp */,
+			);
+			path = cppzmq;
+			sourceTree = "<group>";
+		};
+		9597CDE11FE1507600BF5207 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9597CDE21FE1507700BF5207 /* lib */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9597CDE21FE1507700BF5207 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				9597CDE31FE1507700BF5207 /* libzmq.5.dylib */,
+				9597CDE41FE1507700BF5207 /* libzmq.a */,
+				9597CDE51FE1507700BF5207 /* libzmq.dylib */,
+				9597CDE61FE1507700BF5207 /* pkgconfig */,
+			);
+			name = lib;
+			path = ../../../../../../../usr/local/Cellar/zeromq/4.2.2/lib;
+			sourceTree = "<group>";
+		};
+		9597CDE61FE1507700BF5207 /* pkgconfig */ = {
+			isa = PBXGroup;
+			children = (
+				9597CDE71FE1507700BF5207 /* libzmq.pc */,
+			);
+			path = pkgconfig;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		2FBBEAD708F335360078DB84 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9597CDE01FE14DB600BF5207 /* zmq_addon.hpp in Headers */,
+				9597CDDF1FE14DB600BF5207 /* zmq.hpp in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		2FBBEAD608F335360078DB84 /* max-external */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2FBBEAE008F335360078DB84 /* Build configuration list for PBXNativeTarget "max-external" */;
+			buildPhases = (
+				2FBBEAD708F335360078DB84 /* Headers */,
+				2FBBEAD808F335360078DB84 /* Resources */,
+				2FBBEADA08F335360078DB84 /* Sources */,
+				2FBBEADC08F335360078DB84 /* Frameworks */,
+				2FBBEADF08F335360078DB84 /* Rez */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "max-external";
+			productName = iterator;
+			productReference = 2FBBEAE508F335360078DB84 /* bbb.zmq.sub.bundle */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		089C1669FE841209C02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+			};
+			buildConfigurationList = 2FBBEACF08F335010078DB84 /* Build configuration list for PBXProject "bbb.zmq.sub" */;
+			compatibilityVersion = "Xcode 3.0";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = 089C166AFE841209C02AAC07 /* iterator */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2FBBEAD608F335360078DB84 /* max-external */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2FBBEAD808F335360078DB84 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9597CDDE1FE14DB600BF5207 /* LICENSE in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXRezBuildPhase section */
+		2FBBEADF08F335360078DB84 /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXRezBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2FBBEADA08F335360078DB84 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				22CF119B0EE9A8250054F513 /* bbb.zmq.sub.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		2FBBEAD008F335010078DB84 /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				SDKROOT = macosx10.11;
+				USER_HEADER_SEARCH_PATHS = "/Users/2bit/Documents/Program/MaxSDKs/c74support/**";
+			};
+			name = Development;
+		};
+		2FBBEAD108F335010078DB84 /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				SDKROOT = macosx10.11;
+				USER_HEADER_SEARCH_PATHS = "/Users/2bit/Documents/Program/MaxSDKs/c74support/**";
+			};
+			name = Deployment;
+		};
+		2FBBEAE108F335360078DB84 /* Development */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 22CF10220EE984600054F513 /* maxmspsdk.xcconfig */;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				COPY_PHASE_STRIP = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_VERSION = "";
+				HEADER_SEARCH_PATHS = (
+					/Developer/Headers/FlatCarbon,
+					"\"$(C74SUPPORT)/max-includes\"",
+					"\"$(C74SUPPORT)/msp-includes\"",
+					"\"$(C74SUPPORT)/jit-includes\"",
+					../../maxcpp,
+					./libs/cppzmq,
+					/usr/local/Cellar/zeromq/4.2.2/include,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/Cellar/zeromq/4.2.2/lib,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				OTHER_LDFLAGS = "$(C74_SYM_LINKER_FLAGS)";
+				PRODUCT_NAME = bbb.zmq.sub;
+				SDKROOT = macosx10.11;
+				VALID_ARCHS = x86_64;
+			};
+			name = Development;
+		};
+		2FBBEAE208F335360078DB84 /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 22CF10220EE984600054F513 /* maxmspsdk.xcconfig */;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				COPY_PHASE_STRIP = YES;
+				GCC_VERSION = "";
+				HEADER_SEARCH_PATHS = (
+					/Developer/Headers/FlatCarbon,
+					"\"$(C74SUPPORT)/max-includes\"",
+					"\"$(C74SUPPORT)/msp-includes\"",
+					"\"$(C74SUPPORT)/jit-includes\"",
+					../../maxcpp,
+					./libs/cppzmq,
+					/usr/local/Cellar/zeromq/4.2.2/include,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/Cellar/zeromq/4.2.2/lib,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				OTHER_LDFLAGS = "$(C74_SYM_LINKER_FLAGS)";
+				PRODUCT_NAME = bbb.zmq.sub;
+				SDKROOT = macosx10.11;
+				VALID_ARCHS = x86_64;
+			};
+			name = Deployment;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2FBBEACF08F335010078DB84 /* Build configuration list for PBXProject "bbb.zmq.sub" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2FBBEAD008F335010078DB84 /* Development */,
+				2FBBEAD108F335010078DB84 /* Deployment */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Development;
+		};
+		2FBBEAE008F335360078DB84 /* Build configuration list for PBXNativeTarget "max-external" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2FBBEAE108F335360078DB84 /* Development */,
+				2FBBEAE208F335360078DB84 /* Deployment */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Development;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 089C1669FE841209C02AAC07 /* Project object */;
+}
