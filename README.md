@@ -2,6 +2,14 @@
 
 [zeromq](http://zeromq.org) subscriber for [_Cycling'74 Max_](https://cycling74.com/products/max).
 
+## Notice
+
+if you want to develop this object, you had better see [bbb.max.dev](2bbb/bbb.max.dev).
+
+this repository is subdivided from bbb.max.dev.
+
+and after clone/download bbb.max.dev, you see this **For developer** on this README.
+
 ## Object Argument
 
 ### **bbb.zmq.sub** [ `host_str` [ `format_char...` ] ]
@@ -83,7 +91,7 @@ MIT
 - [zeromq/cppzmq](https://github.com/zeromq/cppzmq)
   - MIT
 
-# For Developer
+# For developer
 
 ## Dependencies
 
