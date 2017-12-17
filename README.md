@@ -72,6 +72,8 @@ MIT
 
 ### Licenses of dependencies
 
+- [2bbb/bbb.max.dev](https://github.com/2bbb/bbb.max.dev)
+  - MIT
 - [Cycling74/max-sdk](https://github.com/Cycling74/max-sdk)
   - MIT
 - [grrrwaaa/maxcpp](https://github.com/grrrwaaa/maxcpp)
@@ -85,8 +87,11 @@ MIT
 
 ## Dependencies
 
-- [Cycling74/max-sdk](https://github.com/Cycling74/max-sdk)
-- [grrrwaaa/maxcpp](https://github.com/grrrwaaa/maxcpp)
+- [2bbb/bbb.max.dev](https://github.com/2bbb/bbb.max.dev)
+  - [Cycling74/max-sdk](https://github.com/Cycling74/max-sdk)
+    - `v7.3.3` tag
+  - [2bbb/maxcpp](https://github.com/grrrwaaa/maxcpp) (fork of [grrrwaaa/maxcpp](https://github.com/grrrwaaa/maxcpp))
+    - `bbb.max.dev` branch
 - [zeromq/libzmq](https://github.com/zeromq/libzmq)
 - [zeromq/cppzmq](https://github.com/zeromq/cppzmq)
 
@@ -105,8 +110,8 @@ brew install zeromq
 
 ## Author
 
-* ISHII 2bit [bufferRenaiss co., ltd.]
-* ishii[at]buffer-renaiss.com
+* ISHII 2bit
+* i[at]2bit.jp
 
 ## At last
 
