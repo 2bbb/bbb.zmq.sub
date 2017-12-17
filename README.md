@@ -32,7 +32,7 @@ and after clone/download bbb.max.dev, you see this **For developer** on this REA
 
 ### **connect** `host_str`
 
-connect to publisher is binded to host_str.
+connect to publisher is binded to `host_str`.
 
 ### **disconnect**
 
@@ -100,7 +100,7 @@ MIT
     - `v7.3.3` tag
   - [2bbb/maxcpp](https://github.com/grrrwaaa/maxcpp) (fork of [grrrwaaa/maxcpp](https://github.com/grrrwaaa/maxcpp))
     - `bbb.max.dev` branch
-- [zeromq/libzmq](https://github.com/zeromq/libzmq)
+- [zeromq/libzmq](https://github.com/zeromq/libzmq) (recommend to use [**homebrew**](https://brew.sh/))
 - [zeromq/cppzmq](https://github.com/zeromq/cppzmq)
 
 ## Dev env.
