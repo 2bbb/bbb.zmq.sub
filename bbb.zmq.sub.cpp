@@ -61,6 +61,9 @@ class MaxZmqSub : public MaxCpp6<MaxZmqSub> {
     std::shared_ptr<std::atomic_bool> b_running;
     std::string format_str{"[t]"};
     
+    bool now_binded{false};
+    bool now_connected{false};
+    
     static void print_info() {
         static bool isnt_printed = true;
         if(isnt_printed) {
@@ -211,16 +214,19 @@ class MaxZmqSub : public MaxCpp6<MaxZmqSub> {
     
     bool connect_impl(t_atom *host) {
         if(is_running()) {
-            dump_error("alredy connected.");
+            if(now_binded) dump_error("alredy binded.");
+            if(now_connected) dump_error("alredy connected.");
             return false;
         }
         
         b_running = std::make_shared<std::atomic_bool>(true);
         auto coppied_b_running = b_running;
         
-        th = std::thread([this, coppied_b_running, host] {
+        std::string connected_host = atom_getsym(host)->s_name;
+        th = std::thread([this, coppied_b_running, connected_host] {
             zmq::socket_t socket(ctx, ZMQ_SUB);
-            socket.connect(atom_getsym(host)->s_name);
+            now_connected = true;
+            socket.connect(connected_host.c_str());
             socket.setsockopt(ZMQ_SUBSCRIBE, "", 0);
             
             while(*coppied_b_running) {
@@ -235,12 +241,52 @@ class MaxZmqSub : public MaxCpp6<MaxZmqSub> {
                 }
                 std::this_thread::sleep_for(std::chrono::nanoseconds(200));
             }
+            socket.disconnect(connected_host.c_str());
             socket.close();
+            now_connected = false;
         });
         th.detach();
         return true;
     }
     
+    bool bind_impl(t_atom *host) {
+        if(is_running()) {
+            if(now_binded) dump_error("alredy binded.");
+            if(now_connected) dump_error("alredy connected.");
+            return false;
+        }
+        
+        b_running = std::make_shared<std::atomic_bool>(true);
+        auto coppied_b_running = b_running;
+        
+        std::string connected_host = atom_getsym(host)->s_name;
+        th = std::thread([this, coppied_b_running, connected_host] {
+            zmq::socket_t socket(ctx, ZMQ_SUB);
+            now_binded = true;
+            socket.bind(connected_host.c_str());
+            socket.setsockopt(ZMQ_SUBSCRIBE, "", 0);
+
+            while(*coppied_b_running) {
+                
+                zmq::message_t msg;
+                try {
+                    if(socket.recv(&msg, ZMQ_NOBLOCK)) {
+                        output_msg(msg);
+                    }
+                } catch(const zmq::error_t& ex) {
+                    if(ex.num() != ETERM)
+                        throw;
+                }
+                std::this_thread::sleep_for(std::chrono::nanoseconds(200));
+            }
+            socket.unbind(connected_host.c_str());
+            socket.close();
+            now_binded = false;
+        });
+        th.detach();
+        return true;
+    }
+
     void disconnect_impl() {
         if(is_running()) {
             *b_running = false;
@@ -250,6 +296,8 @@ class MaxZmqSub : public MaxCpp6<MaxZmqSub> {
     void parse_format(t_atom *pat_atom) {
         format_str = atom_getsym(pat_atom)->s_name;
     }
+    
+    bool is_client{true};
     
 public:
     MaxZmqSub() {
@@ -261,14 +309,20 @@ public:
 	MaxZmqSub(t_symbol *sym, long ac, t_atom *av)
         : MaxZmqSub()
     {
-        if(0 < ac) {
-            if(atom_gettype(av) == A_SYM) {
-                connect_impl(av);
+        if(2 < ac) {
+            if(atom_gettype(av + 2) == A_SYM) {
+                is_client = strncmp(atom_getsym(av + 2)->s_name, "server", 32) != 0;
             }
         }
         if(1 < ac) {
             if(atom_gettype(av + 1) == A_SYM) {
                 parse_format(av + 1);
+            }
+        }
+        if(0 < ac) {
+            if(atom_gettype(av) == A_SYM) {
+                if(is_client) connect_impl(av);
+                else bind_impl(av);
             }
         }
     }
@@ -281,10 +335,15 @@ public:
     void connect(long inlet, t_symbol *s, long ac, t_atom *av) {
         if(0 < ac && atom_gettype(av) == A_SYM) connect_impl(av);
     }
+    void bind(long inlet, t_symbol *s, long ac, t_atom *av) {
+        if(0 < ac && atom_gettype(av) == A_SYM) bind_impl(av);
+    }
     void disconnect(long inlet, t_symbol *s, long ac, t_atom *av) {
         disconnect_impl();
     }
-
+    void unbind(long inlet, t_symbol *s, long ac, t_atom *av) {
+        disconnect_impl();
+    }
     void format(long inlet, t_symbol *s, long ac, t_atom *av) {
         if(0 < ac && atom_gettype(av) == A_SYM) parse_format(av);
     }
@@ -326,7 +385,9 @@ C74_EXPORT int main(void) {
 	// create a class with the given name:
 	MaxZmqSub::makeMaxClass("bbb.zmq.sub");
     REGISTER_METHOD_GIMME(MaxZmqSub, connect);
+    REGISTER_METHOD_GIMME(MaxZmqSub, bind);
     REGISTER_METHOD_GIMME(MaxZmqSub, disconnect);
+    REGISTER_METHOD_GIMME(MaxZmqSub, unbind);
     REGISTER_METHOD_GIMME(MaxZmqSub, format);
     REGISTER_METHOD_ASSIST(MaxZmqSub, assist);
 }
