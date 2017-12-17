@@ -266,7 +266,7 @@ public:
                 connect_impl(av);
             }
         }
-        while(1 < ac) {
+        if(1 < ac) {
             if(atom_gettype(av + 1) == A_SYM) {
                 parse_format(av + 1);
             }
