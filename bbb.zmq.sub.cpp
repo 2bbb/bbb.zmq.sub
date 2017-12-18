@@ -212,7 +212,7 @@ class MaxZmqSub : public MaxCpp6<MaxZmqSub> {
         outlet_atoms(m_outlets[0], atoms.size(), atoms.data());
     }
     
-    bool connect_impl(t_atom *host) {
+    bool connect_impl(t_atom *host, bool use_bind = false) {
         if(is_running()) {
             if(now_binded) dump_error("alredy binded.");
             if(now_connected) dump_error("alredy connected.");
@@ -223,10 +223,15 @@ class MaxZmqSub : public MaxCpp6<MaxZmqSub> {
         auto coppied_b_running = b_running;
         
         std::string connected_host = atom_getsym(host)->s_name;
-        th = std::thread([this, coppied_b_running, connected_host] {
+        th = std::thread([this, coppied_b_running, connected_host, use_bind] {
             zmq::socket_t socket(ctx, ZMQ_SUB);
-            now_connected = true;
-            socket.connect(connected_host.c_str());
+            if(use_bind) {
+                now_binded = true;
+                socket.bind(connected_host.c_str());
+            } else {
+                now_connected = true;
+                socket.connect(connected_host.c_str());
+            }
             socket.setsockopt(ZMQ_SUBSCRIBE, "", 0);
             
             while(*coppied_b_running) {
@@ -241,52 +246,19 @@ class MaxZmqSub : public MaxCpp6<MaxZmqSub> {
                 }
                 std::this_thread::sleep_for(std::chrono::nanoseconds(200));
             }
-            socket.disconnect(connected_host.c_str());
+            if(use_bind) {
+                socket.unbind(connected_host.c_str());
+            } else {
+                socket.disconnect(connected_host.c_str());
+            }
             socket.close();
             now_connected = false;
-        });
-        th.detach();
-        return true;
-    }
-    
-    bool bind_impl(t_atom *host) {
-        if(is_running()) {
-            if(now_binded) dump_error("alredy binded.");
-            if(now_connected) dump_error("alredy connected.");
-            return false;
-        }
-        
-        b_running = std::make_shared<std::atomic_bool>(true);
-        auto coppied_b_running = b_running;
-        
-        std::string connected_host = atom_getsym(host)->s_name;
-        th = std::thread([this, coppied_b_running, connected_host] {
-            zmq::socket_t socket(ctx, ZMQ_SUB);
-            now_binded = true;
-            socket.bind(connected_host.c_str());
-            socket.setsockopt(ZMQ_SUBSCRIBE, "", 0);
-
-            while(*coppied_b_running) {
-                
-                zmq::message_t msg;
-                try {
-                    if(socket.recv(&msg, ZMQ_NOBLOCK)) {
-                        output_msg(msg);
-                    }
-                } catch(const zmq::error_t& ex) {
-                    if(ex.num() != ETERM)
-                        throw;
-                }
-                std::this_thread::sleep_for(std::chrono::nanoseconds(200));
-            }
-            socket.unbind(connected_host.c_str());
-            socket.close();
             now_binded = false;
         });
         th.detach();
         return true;
     }
-
+    
     void disconnect_impl() {
         if(is_running()) {
             *b_running = false;
@@ -311,7 +283,7 @@ public:
     {
         if(2 < ac) {
             if(atom_gettype(av + 2) == A_SYM) {
-                is_client = strncmp(atom_getsym(av + 2)->s_name, "server", 32) != 0;
+                is_client = strncmp(atom_getsym(av + 2)->s_name, "bind", 32) != 0;
             }
         }
         if(1 < ac) {
@@ -321,8 +293,7 @@ public:
         }
         if(0 < ac) {
             if(atom_gettype(av) == A_SYM) {
-                if(is_client) connect_impl(av);
-                else bind_impl(av);
+                connect_impl(av, !is_client);
             }
         }
     }
@@ -333,10 +304,10 @@ public:
     
 	// methods:
     void connect(long inlet, t_symbol *s, long ac, t_atom *av) {
-        if(0 < ac && atom_gettype(av) == A_SYM) connect_impl(av);
+        if(0 < ac && atom_gettype(av) == A_SYM) connect_impl(av, false);
     }
     void bind(long inlet, t_symbol *s, long ac, t_atom *av) {
-        if(0 < ac && atom_gettype(av) == A_SYM) bind_impl(av);
+        if(0 < ac && atom_gettype(av) == A_SYM) connect_impl(av, true);
     }
     void disconnect(long inlet, t_symbol *s, long ac, t_atom *av) {
         disconnect_impl();
