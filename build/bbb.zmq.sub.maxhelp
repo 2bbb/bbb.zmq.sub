@@ -274,9 +274,9 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 667.0, 82.0, 137.0, 22.0 ],
+					"patching_rect" : [ 667.0, 82.0, 118.0, 22.0 ],
 					"style" : "",
-					"text" : "connect ipc:///tmp/feeds"
+					"text" : "bind ipc:///tmp/feeds"
 				}
 
 			}
@@ -344,7 +344,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 507.0, 147.0, 148.0, 22.0 ],
 					"style" : "",
-					"text" : "109 109 109 109"
+					"text" : "§ § § §"
 				}
 
 			}
@@ -355,9 +355,9 @@
 					"numinlets" : 1,
 					"numoutlets" : 4,
 					"outlettype" : [ "", "", "", "" ],
-					"patching_rect" : [ 667.0, 114.0, 79.0, 22.0 ],
+					"patching_rect" : [ 667.0, 114.0, 203.0, 22.0 ],
 					"style" : "",
-					"text" : "bbb.zmq.sub"
+					"text" : "bbb.zmq.sub ipc:///tmp/feeds [t] bind"
 				}
 
 			}
@@ -516,7 +516,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 90.0, 147.0, 148.0, 22.0 ],
 					"style" : "",
-					"text" : "50 50 50 50"
+					"text" : "u u u u"
 				}
 
 			}
