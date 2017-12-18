@@ -12,15 +12,14 @@ and after clone/download bbb.max.dev, you see this **For developer** on this REA
 
 ## Object Argument
 
-### **bbb.zmq.sub** [ `host_str` [ `format_char...` ] ]
+### **bbb.zmq.sub** [ [ `host_str` [ `format_char...` ] ] `bind_state`]
 
 - `host_str` : destination
-
 - - default: `""` (doesn’t connect to subscriber)
-
 - `format_char...` : see _format_ on Messages
-
 - - default: `[t]`
+- `use_bind` : if this parameter is "bind"  then use "bind", otherwise use "connect"
+  - default: `""` (use connect)
 
 **ex.**
 
@@ -32,11 +31,19 @@ and after clone/download bbb.max.dev, you see this **For developer** on this REA
 
 ### **connect** `host_str`
 
-connect to publisher is binded to `host_str`.
+connect to publisher is binded to host_str.
+
+### bind `host_str`
+
+bind `host_str` and wait connection from publisher.
 
 ### **disconnect**
 
 disconnect from publisher.
+
+### unbind
+
+unbind (implementation is same to disconnect. you can use disconnect too)
 
 ### **format** `format_char…`
 
@@ -72,7 +79,7 @@ disconnect from publisher.
 
 
 - [ ] out connection status from right outlet
-- [ ] make enable to choice bind or connect
+- [x] make enable to choice bind or connect
 
 ## Licenses
 
@@ -80,16 +87,11 @@ MIT
 
 ### Licenses of dependencies
 
-- [2bbb/bbb.max.dev](https://github.com/2bbb/bbb.max.dev)
-  - MIT
-- [Cycling74/max-sdk](https://github.com/Cycling74/max-sdk)
-  - MIT
-- [grrrwaaa/maxcpp](https://github.com/grrrwaaa/maxcpp)
-  - MIT
-- [zeromq/libzmq](https://github.com/zeromq/libzmq)
-  - MPL-2.0
-- [zeromq/cppzmq](https://github.com/zeromq/cppzmq)
-  - MIT
+- [2bbb/bbb.max.dev](https://github.com/2bbb/bbb.max.dev) (MIT)
+  - [Cycling74/max-sdk](https://github.com/Cycling74/max-sdk) (MIT)
+  - [grrrwaaa/maxcpp](https://github.com/grrrwaaa/maxcpp) (MIT)
+- [zeromq/libzmq](https://github.com/zeromq/libzmq) (MPL-2.0)
+- [zeromq/cppzmq](https://github.com/zeromq/cppzmq) (MIT)
 
 # For developer
 
@@ -100,8 +102,8 @@ MIT
     - `v7.3.3` tag
   - [2bbb/maxcpp](https://github.com/grrrwaaa/maxcpp) (fork of [grrrwaaa/maxcpp](https://github.com/grrrwaaa/maxcpp))
     - `bbb.max.dev` branch
-- [zeromq/libzmq](https://github.com/zeromq/libzmq) (recommend to use [**homebrew**](https://brew.sh/))
 - [zeromq/cppzmq](https://github.com/zeromq/cppzmq)
+  - [zeromq/libzmq](https://github.com/zeromq/libzmq) (recommend to use [**homebrew**](https://brew.sh/))
 
 ## Dev env.
 
@@ -114,6 +116,9 @@ MIT
 
 ```bash
 brew install zeromq
+git clone https://github.com/2bbb/bbb.dmx.sub /path/to/clone
+cd /path/to/clone
+git submodule update --init --recursive
 ```
 
 ## Author
@@ -123,7 +128,7 @@ brew install zeromq
 
 ## At last
 
-If you get happy with using this addon, and you're rich, please donation for support continuous development.
+If you get happy with using this object, and you're rich, please donation for support continuous development.
 
 Bitcoin: `17AbtW73aydfYH3epP8T3UDmmDCcXSGcaf`
 
