@@ -7,8 +7,7 @@
 
 #include <zmq.hpp>
 
-#include "maxcpp6.h"
-
+#include "bbb.max.dev.hpp"
 #include "bbb.zmq.sub.hpp"
 
 zmq::context_t ctx;
@@ -56,7 +55,7 @@ std::map<format_token, std::tuple<std::function<t_atom_float(void *)>, std::size
     },
 };
 
-class MaxZmqSub : public MaxCpp6<MaxZmqSub> {
+class MaxZmqSub : public bbb::max_obj<MaxZmqSub> {
     std::thread th;
     std::shared_ptr<std::atomic_bool> b_running;
     std::string format_str{"[t]"};
@@ -77,32 +76,27 @@ class MaxZmqSub : public MaxCpp6<MaxZmqSub> {
         }
     }
     
-    inline void set_annotation() {
-        for(std::size_t i = 0; i < 4; i++) {
-            
-        }
-    }
-    
     inline void dump(const std::string &str) {
         post("bbb.zmq.sub: %s\n", str.c_str());
     }
     
     inline void dump_error(const std::string &str) {
         error("bbb.zmq.sub: %s\n", str.c_str());
+        outlet(3, "error_mess", str);
     }
     
     bool is_running() const { return b_running && *b_running; }
     
     void output_msg(zmq::message_t &msg) {
-        std::size_t current_format_index = 0;
+        std::size_t format_cursor = 0;
         const std::size_t data_size = msg.size();
         std::size_t data_cursor = 0;
         
         std::vector<t_atom> atoms;
-        outlet_int(m_outlets[2], data_size);
-        while(data_cursor < data_size && current_format_index < format_str.length()) {
+        outlet(2, data_size);
+        while(data_cursor < data_size && format_cursor < format_str.length()) {
             void *cursor = (void *)((uint8_t *)msg.data() + data_cursor);
-            format_token token = (format_token)format_str[current_format_index];
+            format_token token = (format_token)format_str[format_cursor];
             switch(token) {
                 case format_token::int8_type:
                 case format_token::uint8_type:
@@ -136,10 +130,10 @@ class MaxZmqSub : public MaxCpp6<MaxZmqSub> {
                 }
                 case format_token::array_begin: {
                     if(
-                       (format_token)format_str[current_format_index + 1] != format_token::array_end
-                       && (format_token)format_str[current_format_index + 2] == format_token::array_end
+                       (format_token)format_str[format_cursor + 1] != format_token::array_end
+                       && (format_token)format_str[format_cursor + 2] == format_token::array_end
                     ) {
-                        format_token loop_token = (format_token)format_str[current_format_index + 1];
+                        format_token loop_token = (format_token)format_str[format_cursor + 1];
                         switch(loop_token) {
                             case format_token::int8_type:
                             case format_token::uint8_type:
@@ -187,15 +181,19 @@ class MaxZmqSub : public MaxCpp6<MaxZmqSub> {
                         }
                         if(atoms.empty()) dump_error("data is short than required.");
                         else {
-                            outlet_int(m_outlets[1], atoms.size());
-                            outlet_atoms(m_outlets[0], atoms.size(), atoms.data());
+                            outlet(1, atoms.size());
+                            outlet(0, atoms);
                         }
                         return;
                     }
                     break;
                 }
                 case format_token::array_end: {
-                    while((format_token)format_str[current_format_index--] != format_token::array_begin);
+                    while(format_cursor && (format_token)format_str[format_cursor--] != format_token::array_begin);
+                    if(format_cursor == 0 && (format_token)format_str[0] != format_token::array_begin) {
+                        dump_error("format_str is wrong");
+                        return;
+                    }
                     break;
                 }
                 case format_token::skip_byte: {
@@ -206,10 +204,10 @@ class MaxZmqSub : public MaxCpp6<MaxZmqSub> {
                     
                     break;
             }
-            current_format_index++;
+            format_cursor++;
         }
-        outlet_int(m_outlets[1], atoms.size());
-        outlet_atoms(m_outlets[0], atoms.size(), atoms.data());
+        outlet(1, atoms.size());
+        outlet(0, atoms);
     }
     
     bool connect_impl(t_atom *host, bool use_bind = false) {
@@ -225,14 +223,19 @@ class MaxZmqSub : public MaxCpp6<MaxZmqSub> {
         std::string connected_host = atom_getsym(host)->s_name;
         th = std::thread([this, coppied_b_running, connected_host, use_bind] {
             zmq::socket_t socket(ctx, ZMQ_SUB);
-            if(use_bind) {
-                now_binded = true;
-                socket.bind(connected_host.c_str());
-            } else {
-                now_connected = true;
-                socket.connect(connected_host.c_str());
+            try {
+                if(use_bind) {
+                    now_binded = true;
+                    socket.bind(connected_host.c_str());
+                } else {
+                    now_connected = true;
+                    socket.connect(connected_host.c_str());
+                }
+                socket.setsockopt(ZMQ_SUBSCRIBE, "", 0);
+                outlet(3, "connected", 1, use_bind ? "bind" : "connected");
+            } catch(const zmq::error_t &e) {
+                outlet(3, "connected", 0, "");
             }
-            socket.setsockopt(ZMQ_SUBSCRIBE, "", 0);
             
             while(*coppied_b_running) {
                 zmq::message_t msg;
@@ -246,10 +249,14 @@ class MaxZmqSub : public MaxCpp6<MaxZmqSub> {
                 }
                 std::this_thread::sleep_for(std::chrono::nanoseconds(200));
             }
+            
+            char   endpoint[256];
+            size_t endpoint_len = sizeof(endpoint);
+            socket.getsockopt(ZMQ_LAST_ENDPOINT, endpoint, &endpoint_len);
             if(use_bind) {
-                socket.unbind(connected_host.c_str());
+                socket.unbind(endpoint);
             } else {
-                socket.disconnect(connected_host.c_str());
+                socket.disconnect(endpoint);
             }
             socket.close();
             now_connected = false;
@@ -281,21 +288,7 @@ public:
 	MaxZmqSub(t_symbol *sym, long ac, t_atom *av)
         : MaxZmqSub()
     {
-        if(2 < ac) {
-            if(atom_gettype(av + 2) == A_SYM) {
-                is_client = strncmp(atom_getsym(av + 2)->s_name, "bind", 32) != 0;
-            }
-        }
-        if(1 < ac) {
-            if(atom_gettype(av + 1) == A_SYM) {
-                parse_format(av + 1);
-            }
-        }
-        if(0 < ac) {
-            if(atom_gettype(av) == A_SYM) {
-                connect_impl(av, !is_client);
-            }
-        }
+        copyArgs(sym, ac, av);
     }
 	
     ~MaxZmqSub() {
@@ -350,15 +343,35 @@ public:
                 break;
         }
     }
+    
+    void loadbang(void *) {
+        std::size_t ac = args.size();
+        t_atom *av = args.data();
+        if(2 < ac) {
+            if(atom_gettype(av + 2) == A_SYM) {
+                is_client = strncmp(atom_getsym(av + 2)->s_name, "bind", 32) != 0;
+            }
+        }
+        if(1 < ac) {
+            if(atom_gettype(av + 1) == A_SYM) {
+                parse_format(av + 1);
+            }
+        }
+        if(0 < ac) {
+            if(atom_gettype(av) == A_SYM) {
+                connect_impl(av, !is_client);
+            }
+        }
+    }
 };
 
 C74_EXPORT int main(void) {
 	// create a class with the given name:
 	MaxZmqSub::makeMaxClass("bbb.zmq.sub");
-    REGISTER_METHOD_GIMME(MaxZmqSub, connect);
-    REGISTER_METHOD_GIMME(MaxZmqSub, bind);
-    REGISTER_METHOD_GIMME(MaxZmqSub, disconnect);
-    REGISTER_METHOD_GIMME(MaxZmqSub, unbind);
-    REGISTER_METHOD_GIMME(MaxZmqSub, format);
-    REGISTER_METHOD_ASSIST(MaxZmqSub, assist);
+    MaxZmqSub::registerStandardFunctions();
+    MaxZmqSub::registerGimme<&MaxZmqSub::connect>("connect");
+    MaxZmqSub::registerGimme<&MaxZmqSub::bind>("bind");
+    MaxZmqSub::registerGimme<&MaxZmqSub::disconnect>("disconnect");
+    MaxZmqSub::registerGimme<&MaxZmqSub::unbind>("unbind");
+    MaxZmqSub::registerGimme<&MaxZmqSub::format>("format");
 }
