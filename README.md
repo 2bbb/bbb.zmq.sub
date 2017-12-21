@@ -78,7 +78,7 @@ unbind (implementation is same to disconnect. you can use disconnect too)
 - [ ] implement option about converting belong Little Endian ↔ Big Endian (if needed)
 
 
-- [ ] out connection status from right outlet
+- [x] out connection status from right outlet
 - [x] make enable to choice bind or connect
 
 ## Licenses
@@ -116,9 +116,6 @@ MIT
 
 ```bash
 brew install zeromq
-git clone https://github.com/2bbb/bbb.dmx.sub /path/to/clone
-cd /path/to/clone
-git submodule update --init --recursive
 ```
 
 ## Author
