@@ -9,8 +9,10 @@
 /* Begin PBXBuildFile section */
 		22CF119B0EE9A8250054F513 /* bbb.zmq.sub.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 22CF119A0EE9A8250054F513 /* bbb.zmq.sub.cpp */; };
 		22CF119E0EE9A82E0054F513 /* MaxAudioAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22CF119D0EE9A82E0054F513 /* MaxAudioAPI.framework */; };
-		9596B0161FEB5C1900AD6A7E /* bbb.max.dev.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9596B0131FEB5C1900AD6A7E /* bbb.max.dev.hpp */; };
-		9596B0171FEB5C1900AD6A7E /* type_traits.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9596B0151FEB5C1900AD6A7E /* type_traits.hpp */; };
+		9596B0311FEC9A0D00AD6A7E /* bbb.max.dev.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9596B02B1FEC9A0D00AD6A7E /* bbb.max.dev.hpp */; };
+		9596B0321FEC9A0D00AD6A7E /* type_traits.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9596B02D1FEC9A0D00AD6A7E /* type_traits.hpp */; };
+		9596B0331FEC9A0D00AD6A7E /* convert.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9596B02F1FEC9A0D00AD6A7E /* convert.hpp */; };
+		9596B0341FEC9A0D00AD6A7E /* register_methods.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9596B0301FEC9A0D00AD6A7E /* register_methods.hpp */; };
 		9597CDDE1FE14DB600BF5207 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 9597CDDB1FE14DB600BF5207 /* LICENSE */; };
 		9597CDDF1FE14DB600BF5207 /* zmq.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9597CDDC1FE14DB600BF5207 /* zmq.hpp */; };
 		9597CDE01FE14DB600BF5207 /* zmq_addon.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9597CDDD1FE14DB600BF5207 /* zmq_addon.hpp */; };
@@ -23,8 +25,10 @@
 		22CF119D0EE9A82E0054F513 /* MaxAudioAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MaxAudioAPI.framework; path = "../../libs/max-sdk/source/c74support/msp-includes/MaxAudioAPI.framework"; sourceTree = SOURCE_ROOT; };
 		2FBBEAE508F335360078DB84 /* bbb.zmq.sub.mxo */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = bbb.zmq.sub.mxo; sourceTree = BUILT_PRODUCTS_DIR; };
 		36C5493616F558AA0054C037 /* maxcpp6.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = maxcpp6.h; sourceTree = "<group>"; };
-		9596B0131FEB5C1900AD6A7E /* bbb.max.dev.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = bbb.max.dev.hpp; sourceTree = "<group>"; };
-		9596B0151FEB5C1900AD6A7E /* type_traits.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = type_traits.hpp; sourceTree = "<group>"; };
+		9596B02B1FEC9A0D00AD6A7E /* bbb.max.dev.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = bbb.max.dev.hpp; sourceTree = "<group>"; };
+		9596B02D1FEC9A0D00AD6A7E /* type_traits.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = type_traits.hpp; sourceTree = "<group>"; };
+		9596B02F1FEC9A0D00AD6A7E /* convert.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = convert.hpp; sourceTree = "<group>"; };
+		9596B0301FEC9A0D00AD6A7E /* register_methods.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = register_methods.hpp; sourceTree = "<group>"; };
 		9597CDDB1FE14DB600BF5207 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		9597CDDC1FE14DB600BF5207 /* zmq.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = zmq.hpp; sourceTree = "<group>"; };
 		9597CDDD1FE14DB600BF5207 /* zmq_addon.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = zmq_addon.hpp; sourceTree = "<group>"; };
@@ -51,7 +55,7 @@
 		089C166AFE841209C02AAC07 /* iterator */ = {
 			isa = PBXGroup;
 			children = (
-				9596B0121FEB5C1900AD6A7E /* src */,
+				9596B02A1FEC9A0D00AD6A7E /* include */,
 				36C5491F16F557E00054C037 /* maxcpp */,
 				22CF10220EE984600054F513 /* maxmspsdk.xcconfig */,
 				9597CDE91FE5205B00BF5207 /* bbb.zmq.sub.hpp */,
@@ -81,22 +85,32 @@
 			path = ../../libs/maxcpp/maxcpp;
 			sourceTree = SOURCE_ROOT;
 		};
-		9596B0121FEB5C1900AD6A7E /* src */ = {
+		9596B02A1FEC9A0D00AD6A7E /* include */ = {
 			isa = PBXGroup;
 			children = (
-				9596B0131FEB5C1900AD6A7E /* bbb.max.dev.hpp */,
-				9596B0141FEB5C1900AD6A7E /* type_traits */,
+				9596B02B1FEC9A0D00AD6A7E /* bbb.max.dev.hpp */,
+				9596B02C1FEC9A0D00AD6A7E /* type_traits */,
+				9596B02E1FEC9A0D00AD6A7E /* utility */,
 			);
-			name = src;
-			path = ../../src;
+			name = include;
+			path = ../../include;
 			sourceTree = "<group>";
 		};
-		9596B0141FEB5C1900AD6A7E /* type_traits */ = {
+		9596B02C1FEC9A0D00AD6A7E /* type_traits */ = {
 			isa = PBXGroup;
 			children = (
-				9596B0151FEB5C1900AD6A7E /* type_traits.hpp */,
+				9596B02D1FEC9A0D00AD6A7E /* type_traits.hpp */,
 			);
 			path = type_traits;
+			sourceTree = "<group>";
+		};
+		9596B02E1FEC9A0D00AD6A7E /* utility */ = {
+			isa = PBXGroup;
+			children = (
+				9596B02F1FEC9A0D00AD6A7E /* convert.hpp */,
+				9596B0301FEC9A0D00AD6A7E /* register_methods.hpp */,
+			);
+			path = utility;
 			sourceTree = "<group>";
 		};
 		9597CB051FE14C8500BF5207 /* libs */ = {
@@ -153,9 +167,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				9597CDE01FE14DB600BF5207 /* zmq_addon.hpp in Headers */,
-				9596B0171FEB5C1900AD6A7E /* type_traits.hpp in Headers */,
+				9596B0321FEC9A0D00AD6A7E /* type_traits.hpp in Headers */,
+				9596B0341FEC9A0D00AD6A7E /* register_methods.hpp in Headers */,
 				9597CDDF1FE14DB600BF5207 /* zmq.hpp in Headers */,
-				9596B0161FEB5C1900AD6A7E /* bbb.max.dev.hpp in Headers */,
+				9596B0311FEC9A0D00AD6A7E /* bbb.max.dev.hpp in Headers */,
+				9596B0331FEC9A0D00AD6A7E /* convert.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
